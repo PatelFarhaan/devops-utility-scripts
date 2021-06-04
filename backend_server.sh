@@ -49,7 +49,7 @@ sudo rm -rf /etc/nginx/sites-available/default &&
 
 sudo cp "nginx/$nginx_env" /etc/nginx/sites-available/ &&
 
-sudo ln -s "/etc/nginx/sites-available/$nginx_env" /etc/nginx/sites-enabled/
+sudo ln -sf "/etc/nginx/sites-available/$nginx_env" /etc/nginx/sites-enabled/
 
 sudo systemctl restart nginx &&
 
@@ -58,7 +58,6 @@ sudo systemctl restart supervisor
 
 
 # Make sure start.sh is present in the branch and has the Gunicorn config set as:
-
 # cd /home/ubuntu/webapp &&
 # source venv/bin/activate &&
 # gunicorn --workers=2 --threads=4 --bind=0.0.0.0:5000 app:app

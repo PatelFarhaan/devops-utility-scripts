@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-mongo_username="***REMOVED***"
-
-mongo_password="***REMOVED***"
-
 sudo apt-get update && sudo apt-get upgrade -y &&
 
 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y &&
@@ -17,16 +13,21 @@ sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io -y &&
 
 sudo apt update && apt list -a docker-ce &&
 
-sudo docker pull mongo &&
+sudo docker pull jenkinsci/blueocean &&
 
 sudo docker run \
   -d \
-  -it \
   -u root \
-  -p 27017:27017 \
-  --name mongo \
+  -p 8081:8080 \
+  --name jenkins \
   --restart always \
-  -v `pwd`/data/mongo:/data/db \
-  -e MONGO_INITDB_ROOT_USERNAME=$mongo_username \
-  -e MONGO_INITDB_ROOT_PASSWORD=$mongo_password \
-  mongo
+  -v `pwd`/data/jenkins:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkinsci/blueocean &&
+
+while [ ! `sudo ls /home/ubuntu/data/jenkins/secrets/initialAdminPassword` ];
+do
+    sleep 15
+done
+
+sudo cat /home/ubuntu/data/jenkins/secrets/initialAdminPassword
