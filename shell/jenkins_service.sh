@@ -24,6 +24,7 @@ sudo docker pull jenkinsci/blueocean &&
 
 sudo docker run \
   -d \
+  -it \
   -u root \
   -p 8081:8080 \
   --name jenkins \
