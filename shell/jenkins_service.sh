@@ -60,6 +60,4 @@ sudo docker restart jenkins &&
 
 sudo cat "$jenkins_dir/secrets/initialAdminPassword"
 
-
-
 # Name of plugins to download: https://plugins.jenkins.io/
